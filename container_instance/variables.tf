@@ -9,7 +9,7 @@ variable "availability_domain" {
   default     = 1
 }
 
-variable "fd" {
+variable "fault_domain" {
   description = "(Optional) The fault domain where the container instance runs."
   type        = number
   default     = 1
@@ -92,6 +92,7 @@ variable "vnics" {
     skip_source_dest_check = optional(string)
     subnet_name            = string
     freeform_tags          = optional(map(string))
+    defined_tags           = optional(map(string))
   })
 }
 
@@ -108,9 +109,6 @@ variable "dns_config" {
 variable "subnet_ids" {
   description = "(Required) The OCID of the subnet to create the VNIC in."
   type        = map(string)
-  default = {
-    public_subnet-vcn = "ocid1.subnet.oc1.eu-frankfurt-1.aaaaaaaaifysn4vhsag4gnebm3rdqxnxp4rvysmjvvbfobuhh6jjkvl66nma"
-  }
 }
 
 variable "image_pull_secrets" {
@@ -137,5 +135,15 @@ variable "volumes" {
       path      = optional(string)
     })))
   }))
+  default = null
+}
+
+variable "defined_tags" {
+  type    = map(string)
+  default = null
+}
+
+variable "freeform_tags" {
+  type    = map(string)
   default = null
 }
